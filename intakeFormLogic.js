@@ -18,7 +18,7 @@ function loadCaseSpecific() {
             return;
     }
 
-    // Load the selected case type file into the container
+    // Fetch the file and inject it into the case-specific container
     fetch(`case-type-questions/${fileName}`)
         .then(response => {
             if (!response.ok) {
@@ -27,22 +27,37 @@ function loadCaseSpecific() {
             return response.text();
         })
         .then(data => {
-            // Insert the loaded HTML into the case-specific container
             document.getElementById('case-specific-container').innerHTML = data;
-            showCard(2); // Show card 2 for the case-specific questions
         })
         .catch(error => console.error('Error loading case-specific file:', error));
 }
 
-// Function to show a specific card by card number
 function showCard(cardNumber) {
+    // Hide all currently visible cards
     document.querySelectorAll('.card').forEach(function(card) {
         card.style.display = 'none';
     });
-    document.getElementById('card-' + cardNumber).style.display = 'block';
+
+    // Show the card with the given cardNumber
+    const cardToShow = document.getElementById('card-' + cardNumber);
+    if (cardToShow) {
+        cardToShow.style.display = 'block';
+    } else {
+        console.error(`Card with ID card-${cardNumber} not found.`);
+    }
 }
 
-// Function to navigate to the previous card
 function prevCard(cardNumber) {
-    showCard(cardNumber);
+    // Hide all currently visible cards
+    document.querySelectorAll('.card').forEach(function(card) {
+        card.style.display = 'none';
+    });
+
+    // Show the previous card
+    const cardToShow = document.getElementById('card-' + cardNumber);
+    if (cardToShow) {
+        cardToShow.style.display = 'block';
+    } else {
+        console.error(`Card with ID card-${cardNumber} not found.`);
+    }
 }
