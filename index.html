@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>JotForm Embedded on GitHub Pages</title>
+
+    <!-- Add CSS styling to ensure the form displays nicely -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+    </style>
+
+    <!-- Add a JavaScript warning for unsaved changes -->
+    <script type="text/javascript">
+        window.onbeforeunload = function () {
+            return "You have unsaved changes. Are you sure you want to leave?";
+        };
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Fill Out This Form</h1>
+
+    <!-- Embed JotForm using iframe -->
+    <iframe
+        src="https://form.jotform.com/242534988649071"  <!-- Replace with your form URL -->
+        frameborder="0"
+        allowfullscreen
+    ></iframe>
+</div>
+
+</body>
+</html>
