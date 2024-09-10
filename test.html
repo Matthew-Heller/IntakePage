@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC Intake Form</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>MVC Intake Form</h2>
+
+    <form id="intake-form" method="POST" action="/submit-intake">
+        <!-- Card 1: General Intake Details -->
+        <div class="card" id="card-1">
+            <h3>General Information</h3>
+            <label for="intake-date">Date of Intake:</label>
+            <input type="date" id="intake-date" name="intake_date" required>
+
+            <label for="intake-person">Person Performing Intake:</label>
+            <input type="text" id="intake-person" name="intake_person" required>
+
+            <label for="case-type">Case Type:</label>
+            <select id="case-type" name="case_type" required>
+                <option value="">Select Case Type</option>
+                <option value="Med Mal">Med Mal</option>
+                <option value="Motor Vehicle Collision">Motor Vehicle Collision</option>
+                <option value="Premises Liability">Premises Liability</option>
+            </select>
+
+            <button type="button" onclick="loadCaseSpecific()">Next</button>
+        </div>
+
+        <!-- Container for dynamically loaded case-specific questions -->
+        <div id="case-specific-container"></div>
+
+        <!-- Card 3: Final Submission -->
+        <div id="card-3" class="card" style="display: none;">
+            <h3>Additional Information or Final Submit</h3>
+            <button type="button" onclick="prevCard(2)">Back</button>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function loadCaseSpecific() {
+        const caseType = document.getElementById('case-type').value;
+        let fileName = '';
+
+        // Determine which file to load based on case type
+        switch (caseType) {
+            case 'Med Mal':
+                fileName = 'med-mal.html';
+                break;
+            case 'Motor Vehicle Collision':
+                fileName = 'mvc.html';
+                break;
+            case 'Premises Liability':
+                fileName = 'premises-liability.html';
+                break;
+            default:
+                alert('Please select a case type.');
+                return;
+        }
+
+        // Load the selected case type file into the container
+        fetch(`case-type-questions/${fileName}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${fileName}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('case-specific-container').innerHTML = data;
+                showCard(2); // Show card 2 for the case-specific questions
+            })
+            .catch(error => console.error('Error loading case-specific file:', error));
+    }
+
+    // Function to show a specific card by card number
+    function showCard(cardNumber) {
+        document.querySelectorAll('.card').forEach(function(card) {
+            card.style.display = 'none';
+        });
+        document.getElementById('card-' + cardNumber).style.display = 'block';
+    }
+
+    // Function to navigate to the previous card
+    function prevCard(cardNumber) {
+        showCard(cardNumber);
+    }
+</script>
+
+</body>
+</html>

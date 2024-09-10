@@ -3,55 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>JotForm Embedded on GitHub Pages</title>
-
-    <!-- Add CSS styling to ensure the form displays nicely -->
+    <title>Intake Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: auto;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        iframe {
-            width: 100%;
-            height: 700px;
-            border: none;
-        }
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: 0 auto; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .new-intake { margin-top: 20px; }
     </style>
-
-    <!-- Add a JavaScript warning for unsaved changes -->
-    <script type="text/javascript">
-        window.onbeforeunload = function () {
-            return "You have unsaved changes. Are you sure you want to leave?";
-        };
-    </script>
 </head>
 <body>
+    <div class="container">
+        <h1>Intake Dashboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Form ID</th>
+                    <th>Status</th>
+                    <th>Last Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="intake-forms">
+                <!-- Dynamic content goes here -->
+            </tbody>
+        </table>
+        <button class="new-intake" onclick="startNewForm()">Start New Intake</button>
+    </div>
 
-<div class="container">
-    <h1>Fill Out This Form</h1>
+    <script>
+        // Dummy data - this would come from the backend/database
+        const intakeForms = [
+            { id: 1, name: 'John Doe', status: 'Completed', lastUpdated: '2024-09-10' },
+            { id: 2, name: 'Jane Smith', status: 'In Progress', lastUpdated: '2024-09-09' }
+        ];
 
-    <!-- Embed JotForm using iframe -->
-    <iframe
-        src="https://form.jotform.com/242534988649071"  <!-- Replace with your form URL -->
-        frameborder="0"
-        allowfullscreen
-    ></iframe>
-</div>
+        // Function to display forms on the dashboard
+        function loadForms() {
+            const tbody = document.getElementById('intake-forms');
+            tbody.innerHTML = '';
 
+            intakeForms.forEach(form => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${form.name}</td>
+                    <td>${form.id}</td>
+                    <td>${form.status}</td>
+                    <td>${form.lastUpdated}</td>
+                    <td><button onclick="continueForm(${form.id})">Continue</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Function to start a new form
+        function startNewForm() {
+            window.location.href = '/new-intake-form'; // Redirect to a form page
+        }
+
+        // Function to continue an in-progress form
+        function continueForm(formId) {
+            window.location.href = `/continue-intake-form?id=${formId}`; // Redirect to form page
+        }
+
+        window.onload = loadForms;
+    </script>
 </body>
 </html>
