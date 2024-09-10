@@ -18,12 +18,13 @@
             <input type="text" id="intake-person" name="intake_person" required>
 
             <label for="case-type">Case Type:</label>
-            <select id="case-type" name="case_type" required>
+            <select id="case-type" name="case_type" required onchange="loadCaseSpecific()">
                 <option value="">Select Case Type</option>
                 <option value="Med Mal">Med Mal</option>
                 <option value="Motor Vehicle Collision">Motor Vehicle Collision</option>
                 <option value="Premises Liability">Premises Liability</option>
             </select>
+            
         </div>
 
         <!-- Container for dynamically loaded case-specific questions -->

@@ -19,6 +19,7 @@ function loadCaseSpecific() {
             return;
     }
 
+    // Fetch and store case-specific content
     fetch(`case-type-questions/${fileName}`)
         .then(response => {
             if (!response.ok) throw new Error(`Failed to load ${fileName}`);
@@ -35,7 +36,10 @@ function showCard(cardNumber) {
     document.querySelectorAll('.card').forEach(function (card) {
         card.style.display = 'none';
     });
-    document.getElementById('card-' + cardNumber).style.display = 'block';
+    const cardToShow = document.getElementById('card-' + cardNumber);
+    if (cardToShow) {
+        cardToShow.style.display = 'block';
+    }
     currentCard = cardNumber;
 }
 
